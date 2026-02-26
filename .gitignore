@@ -1,0 +1,25 @@
+# Maven / Java build output
+target/
+
+# Logs
+*.log
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+
+# IDEs
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+
+# Env / secrets
+.env
+.env.*
+
+# Large local artifacts
+acp_submission_image.tar
+*.tar

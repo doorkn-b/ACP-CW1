@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,dynamodb
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: acp
+
+  acp-service:
+    image: acp-image-cw1
+    ports:
+      - "8080:8080"
+    environment:
+      ACP_POSTGRES: jdbc:postgresql://postgres:5432/acp?currentSchema=s2423463
+      ACP_S3: http://localstack:4566
+      ACP_DYNAMODB: http://localstack:4566
+    depends_on:
+      - localstack
+      - postgres
